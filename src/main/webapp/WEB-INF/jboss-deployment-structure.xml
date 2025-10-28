@@ -1,0 +1,8 @@
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <!-- Permite usar a implementação JSF do WildFly se desejar -->
+            <module name="jakarta.faces.api" export="true"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>

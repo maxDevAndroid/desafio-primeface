@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="https://jakarta.ee/xml/ns/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Cadastro de Produtos</title>
+    <h:outputStylesheet>
+        /* estilizinho mínimo */
+        .container { max-width: 900px; margin: 20px auto; }
+    </h:outputStylesheet>
+</h:head>
+<h:body>
+    <div class="container">
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true" life="4000" />
+
+            <p:panel header="Cadastro de Produto" style="margin-bottom:20px">
+                <p:panelGrid columns="2" columnClasses="label,value" style="width:100%">
+                    <p:outputLabel for="name" value="Nome:" />
+                    <p:inputText id="name" value="#{productBean.product.name}" required="true" />
+
+                    <p:outputLabel for="price" value="Preço:" />
+                    <p:inputText id="price" value="#{productBean.product.price}" required="true" />
+
+                    <p:outputLabel for="category" value="Categoria:" />
+                    <p:inputText id="category" value="#{productBean.product.category}" />
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Salvar" action="#{productBean.save}"
+                                         update="msgs productsTable"
+                                         process="@this form"
+                                         icon="pi pi-check" />
+                    </f:facet>
+                </p:panelGrid>
+            </p:panel>
+
+            <p:panel header="Produtos Cadastrados">
+                <p:dataTable id="productsTable" value="#{productBean.products}" var="p" responsive="true" emptyMessage="Nenhum produto cadastrado.">
+                    <p:column headerText="Nome"><h:outputText value="#{p.name}" /></p:column>
+                    <p:column headerText="Preço"><h:outputText value="#{p.price}" /></p:column>
+                    <p:column headerText="Categoria"><h:outputText value="#{p.category}" /></p:column>
+                </p:dataTable>
+            </p:panel>
+
+        </h:form>
+    </div>
+</h:body>
+</html>
