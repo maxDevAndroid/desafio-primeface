@@ -36,7 +36,9 @@ projeto-teste/
 │ ├── main/java/com/teste/bean/ProductBean.java
 │ ├── main/java/com/teste/bean/FacesUtil.java
 │ ├── main/webapp/product.xhtml
+│ ├── main/webapp/index.xhtml
 │ └── main/webapp/WEB-INF/web.xml
+│ └── main/webapp/WEB-INF/jboss-deployment-structure.xml
 
 ---
 
@@ -58,7 +60,7 @@ A arquitetura segue o padrão **JSF + CDI**, separando responsabilidades:
 Certifique-se de ter instalado:
 - [Java 21+ (Corretto ou OpenJDK)](https://adoptium.net/)
 - [Maven 3.9+](https://maven.apache.org/install.html)
-- [WildFly 30+](https://www.wildfly.org/downloads/)
+- [WildFly 26+](https://www.wildfly.org/downloads/)
 
 Verifique as versões:
 ```bash
@@ -83,16 +85,16 @@ cp target/projeto-teste.war /usr/local/opt/wildfly-as/libexec/standalone/deploym
 ### 4️⃣ Iniciar o Servidor
 Execute:
 ```bash
-brew services start wildfly-as 
+brew services start wildfly-26
 ```
 ou manualmente:
 ```bash
-JBOSS_HOME="/usr/local/opt/wildfly-as/libexec" WILDFLY_HOME="/usr/local/opt/wildfly-as/libexec" /usr/local/opt/wildfly-as/libexec/bin/standalone.sh
+JBOSS_HOME="/usr/local/opt/wildfly-26/libexec" WILDFLY_HOME="/usr/local/opt/wildfly-26/libexec" /usr/local/opt/wildfly-26/libexec/bin/standalone.sh
 ```
 
 ### 🌐 Acesso à Aplicação
 Após o deploy bem-sucedido, acesse:
-👉 http://localhost:8080/projeto-teste/product.xhtml
+👉 http://localhost:8080/desafio-primeface/product.xhtml
 
 ### 💡 Funcionalidades
  Recurso Descrição
@@ -126,13 +128,10 @@ Código comentado e intuitivo
 ### 🔒 Observações Técnicas
 Persistência em memória (sem banco de dados).
 Estrutura facilmente expansível para integração futura com JPA ou REST.
-Projeto testado e compatível com WildFly 30+ no macOS (Homebrew install).
+Projeto testado e compatível com WildFly 26+ no macOS (Homebrew install).
 
 ### 👨‍💻 Autor
 Maxwell Chaves
 
 Android & Backend Developer
 🔗 linkedin.com/in/maxwellchavesdev/
-
-### 🧾 Licença
-Este projeto é de uso educacional e técnico, podendo ser adaptado livremente para fins de demonstração profissional.
