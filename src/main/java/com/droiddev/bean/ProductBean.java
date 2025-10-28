@@ -1,12 +1,14 @@
-package com.teste.bean;
+package com.droiddev.bean;
 
-import com.teste.model.Product;
-import com.teste.service.ProductService;
-import com.teste.util.FacesUtil;
+import com.droiddev.model.Product;
+import com.droiddev.service.ProductService;
+import com.droiddev.util.FacesUtil;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named("productBean")
@@ -20,7 +22,15 @@ public class ProductBean implements Serializable {
     @Inject
     private ProductService productService;
 
+    // Cache para exibição imediata na tela
+    private List<Product> productsCache = new ArrayList<>();
+
+    // --- Getters e Setters ---
+
     public Product getProduct() {
+        if (product == null) {
+            product = new Product();
+        }
         return product;
     }
 
@@ -29,21 +39,59 @@ public class ProductBean implements Serializable {
     }
 
     public List<Product> getProducts() {
-        return productService.getAllProducts();
+        if (productService != null) {
+            productsCache = productService.getAllProducts();
+        }
+        return productsCache;
     }
 
+    // --- Operações principais ---
+
     public void save() {
-        if (product.getName() == null || product.getName().trim().isEmpty()) {
-            FacesUtil.addErrorMessage("Nome do produto é obrigatório.");
-            return;
+        if (product == null) {
+            product = new Product();
         }
-        if (product.getPrice() == null) {
-            FacesUtil.addErrorMessage("Preço é obrigatório.");
+
+        if (product.getName() == null || product.getName().trim().isEmpty()) {
+            FacesUtil.addErrorMessage("O nome do produto é obrigatório.");
             return;
         }
 
-        productService.addProduct(new Product(product.getName().trim(), product.getPrice(), product.getCategory()));
-        FacesUtil.addInfoMessage("Produto salvo com sucesso.");
-        product = new Product(); // limpa formulário
+        if (product.getPrice() == null) {
+            FacesUtil.addErrorMessage("O preço é obrigatório.");
+            return;
+        }
+
+        try {
+            Product newProduct = new Product(
+                    product.getName().trim(),
+                    product.getPrice(),
+                    product.getCategory()
+            );
+
+            productService.addProduct(newProduct);
+            FacesUtil.addInfoMessage("Produto salvo com sucesso.");
+
+            // Atualiza lista e limpa o formulário
+            product = new Product();
+            productsCache = productService.getAllProducts();
+
+        } catch (Exception e) {
+            FacesUtil.addErrorMessage("Erro ao salvar produto: " + e.getMessage());
+        }
+    }
+
+    public void edit(Product p) {
+        if (p != null) {
+            this.product = p;
+        }
+    }
+
+    public void delete(Product p) {
+        if (p != null && productService != null) {
+            productService.removeProduct(p);
+            FacesUtil.addInfoMessage("Produto removido com sucesso.");
+            productsCache = productService.getAllProducts();
+        }
     }
 }

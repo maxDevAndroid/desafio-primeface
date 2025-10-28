@@ -1,10 +1,25 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="https://jakarta.ee/xml/ns/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Projekto - Home</title>
+    <h:outputStylesheet>
+        body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 0; }
+        .container { max-width: 800px; margin: 80px auto; text-align: center; }
+        .home-card { background: white; padding: 40px 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .home-card h1 { margin-bottom: 30px; color: #333; }
+        .home-link { font-size: 1.2rem; text-decoration: none; padding: 12px 25px; background-color: #4CAF50; color: white; border-radius: 5px; transition: 0.3s; }
+        .home-link:hover { background-color: #45a049; }
+    </h:outputStylesheet>
 </h:head>
+
 <h:body>
-    <h:link outcome="product.xhtml" value="Ir para cadastro de produtos" />
+    <div class="container">
+        <div class="home-card">
+            <h1>Bem-vindo ao Register Product</h1>
+            <h:link outcome="product.xhtml" value="Ir para cadastro de produtos" styleClass="home-link" />
+        </div>
+    </div>
 </h:body>
 </html>

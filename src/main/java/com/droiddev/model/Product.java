@@ -1,4 +1,4 @@
-package com.teste.model;
+package com.droiddev.model;
 
 import java.io.Serializable;
 
